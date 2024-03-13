@@ -145,7 +145,8 @@ class BottomBar extends StatefulWidget {
     this.width = 300,
     this.borderRadius = BorderRadius.zero,
     this.showIcon = true,
-    @Deprecated('Use barAlignment instead, this will be removed in a future release')
+    @Deprecated(
+        'Use barAlignment instead, this will be removed in a future release')
     this.alignment = Alignment.bottomCenter,
     this.barAlignment = Alignment.bottomCenter,
     this.onBottomBarShown,
@@ -162,7 +163,8 @@ class BottomBar extends StatefulWidget {
   _BottomBarState createState() => _BottomBarState();
 }
 
-class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMixin {
+class _BottomBarState extends State<BottomBar>
+    with SingleTickerProviderStateMixin {
   ScrollController scrollBottomBarController = ScrollController();
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
@@ -215,14 +217,16 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
   Future<void> myScroll() async {
     scrollBottomBarController.addListener(() {
       if (!widget.reverse) {
-        if (scrollBottomBarController.position.userScrollDirection == ScrollDirection.reverse) {
+        if (scrollBottomBarController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
           if (!isScrollingDown) {
             isScrollingDown = true;
             isOnTop = false;
             hideBottomBar();
           }
         }
-        if (scrollBottomBarController.position.userScrollDirection == ScrollDirection.forward) {
+        if (scrollBottomBarController.position.userScrollDirection ==
+            ScrollDirection.forward) {
           if (isScrollingDown) {
             isScrollingDown = false;
             isOnTop = true;
@@ -230,14 +234,16 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
           }
         }
       } else {
-        if (scrollBottomBarController.position.userScrollDirection == ScrollDirection.forward) {
+        if (scrollBottomBarController.position.userScrollDirection ==
+            ScrollDirection.forward) {
           if (!isScrollingDown) {
             isScrollingDown = true;
             isOnTop = false;
             hideBottomBar();
           }
         }
-        if (scrollBottomBarController.position.userScrollDirection == ScrollDirection.reverse) {
+        if (scrollBottomBarController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
           if (isScrollingDown) {
             isScrollingDown = false;
             isOnTop = true;
@@ -295,8 +301,10 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                           scrollBottomBarController
                               .animateTo(
                             (!widget.scrollOpposite)
-                                ? scrollBottomBarController.position.minScrollExtent
-                                : scrollBottomBarController.position.maxScrollExtent,
+                                ? scrollBottomBarController
+                                    .position.minScrollExtent
+                                : scrollBottomBarController
+                                    .position.maxScrollExtent,
                             duration: widget.duration,
                             curve: widget.curve,
                           )
@@ -312,7 +320,8 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                         },
                         child: () {
                           if (widget.icon != null) {
-                            return widget.icon!(isOnTop == true ? 0 : widget.iconWidth / 2,
+                            return widget.icon!(
+                                isOnTop == true ? 0 : widget.iconWidth / 2,
                                 isOnTop == true ? 0 : widget.iconHeight / 2);
                           } else {
                             return Center(
@@ -322,7 +331,9 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                                 icon: Icon(
                                   Icons.arrow_upward_rounded,
                                   color: Colors.white,
-                                  size: isOnTop == true ? 0 : widget.iconWidth / 2,
+                                  size: isOnTop == true
+                                      ? 0
+                                      : widget.iconWidth / 2,
                                 ),
                               ),
                             );
@@ -337,24 +348,9 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
           ),
         Align(
           alignment: widget.barAlignment,
-          child: Padding(
-            padding: EdgeInsets.all(widget.offset),
-            child: SlideTransition(
-              position: _offsetAnimation,
-              child: Container(
-                width: widget.width,
-                decoration: widget.barDecoration ??
-                    BoxDecoration(
-                      color: widget.barColor,
-                      borderRadius: widget.borderRadius,
-                    ),
-                child: Material(
-                  color: widget.barColor,
-                  child: widget.child,
-                  borderRadius: widget.borderRadius,
-                ),
-              ),
-            ),
+          child: SlideTransition(
+            position: _offsetAnimation,
+            child: widget.child,
           ),
         ),
       ],
